@@ -9,85 +9,85 @@ using DabHandIn2.Models;
 
 namespace DabHandIn2.Controllers
 {
-    public class TeachersController : Controller
+    public class HelpRequestsController : Controller
     {
         private readonly HelpRequestContext _context;
 
-        public TeachersController(HelpRequestContext context)
+        public HelpRequestsController(HelpRequestContext context)
         {
             _context = context;
         }
 
-        // GET: Teachers
+        // GET: HelpRequests
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Teachers.ToListAsync());
+            return View(await _context.Students.ToListAsync());
         }
 
-        // GET: Teachers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: HelpRequests/Details/5
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers
+            var student = await _context.Students
                 .FirstOrDefaultAsync(m => m.auId == id);
-            if (teacher == null)
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return View(teacher);
+            return View(student);
         }
 
-        // GET: Teachers/Create
+        // GET: HelpRequests/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Teachers/Create
+        // POST: HelpRequests/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("auId,Name,CourseId")] Teacher teacher)
+        public async Task<IActionResult> Create([Bind("auId,Name,Email")] Student student)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(teacher);
+                _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(teacher);
+            return View(student);
         }
 
-        // GET: Teachers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: HelpRequests/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers.FindAsync(id);
-            if (teacher == null)
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
             {
                 return NotFound();
             }
-            return View(teacher);
+            return View(student);
         }
 
-        // POST: Teachers/Edit/5
+        // POST: HelpRequests/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("auId,Name,CourseId")] Teacher teacher)
+        public async Task<IActionResult> Edit(string id, [Bind("auId,Name,Email")] Student student)
         {
-            if (id != teacher.auId)
+            if (id != student.auId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace DabHandIn2.Controllers
             {
                 try
                 {
-                    _context.Update(teacher);
+                    _context.Update(student);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TeacherExists(teacher.auId))
+                    if (!StudentExists(student.auId))
                     {
                         return NotFound();
                     }
@@ -112,41 +112,41 @@ namespace DabHandIn2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(teacher);
+            return View(student);
         }
 
-        // GET: Teachers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: HelpRequests/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var teacher = await _context.Teachers
+            var student = await _context.Students
                 .FirstOrDefaultAsync(m => m.auId == id);
-            if (teacher == null)
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return View(teacher);
+            return View(student);
         }
 
-        // POST: Teachers/Delete/5
+        // POST: HelpRequests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var teacher = await _context.Teachers.FindAsync(id);
-            _context.Teachers.Remove(teacher);
+            var student = await _context.Students.FindAsync(id);
+            _context.Students.Remove(student);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TeacherExists(int id)
+        private bool StudentExists(string id)
         {
-            return _context.Teachers.Any(e => e.auId == id);
+            return _context.Students.Any(e => e.auId == id);
         }
     }
 }
