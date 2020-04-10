@@ -43,8 +43,9 @@ namespace DabHandIn2.Controllers
         }
 
         // GET: Teachers/Create
-        public IActionResult Create()
+        public IActionResult Create(int? CourseId)
         {
+            ViewData["CourseId"] = CourseId;
             return View();
         }
 
