@@ -110,6 +110,9 @@ namespace DabHandIn2.Migrations
                     b.Property<string>("auId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -161,7 +164,7 @@ namespace DabHandIn2.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -247,9 +250,11 @@ namespace DabHandIn2.Migrations
 
             modelBuilder.Entity("DabHandIn2.Models.Teacher", b =>
                 {
-                    b.HasOne("DabHandIn2.Models.Course", null)
+                    b.HasOne("DabHandIn2.Models.Course", "Course")
                         .WithMany("Teachers")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

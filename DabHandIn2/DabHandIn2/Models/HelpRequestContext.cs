@@ -9,19 +9,27 @@ namespace DabHandIn2.Models
     public class HelpRequestContext : DbContext
     {
 
-        DbSet<Teacher> Teachers { get; set; }
-        DbSet<Exercise> Exercises { get; set; }
-        DbSet<Student> Students { get; set; }
-        DbSet<Assignment> Assignments { get; set; }
-        DbSet<Course> Courses { get; set; }
-        DbSet<AssignmentExercise> AssignmentExercises { get; set; }
-        DbSet<StudentAssignment> StudentAssignments { get; set; }
-        DbSet<StudentCourse> StudentCourses { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<AssignmentExercise> AssignmentExercises { get; set; }
+        public DbSet<StudentAssignment> StudentAssignments { get; set; }
+        public DbSet<StudentCourse> StudentCourses { get; set; }
+
+        public HelpRequestContext()
+        {
+        }
+
+        public HelpRequestContext(DbContextOptions<HelpRequestContext> options)
+            : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            string connectionString = "@Server = (localdb)\\mssqllocaldb; Database = EFProviders.InMemory; Trusted_Connection = True; ConnectRetryCount = 0";
-            options.UseSqlServer(connectionString);
+            base.OnConfiguring(options);
         } 
 
         protected override void OnModelCreating(ModelBuilder mb)
@@ -46,7 +54,7 @@ namespace DabHandIn2.Models
                 .WithMany(a => a.AssignmentExercises)
                 .HasForeignKey(ae => ae.AssignmentId);
 
-            //Cofiguring N-N relationship for StudentCourse shadowtable
+            //Configuring N-N relationship for StudentCourse shadowtable
             mb.Entity<StudentCourse>().HasKey(sc => new { sc.auId, sc.CourseId });
             mb.Entity<StudentCourse>()
                 .HasOne(sc => sc.Student)

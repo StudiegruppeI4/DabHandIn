@@ -9,6 +9,8 @@ namespace DabHandIn2.Models
     {
         public int auId { get; set; }
         public string Name { get; set; }
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
         public ICollection<Assignment> Assignments { get; set; }
         public ICollection<Exercise> Exercises { get; set; }
     }
