@@ -29,7 +29,7 @@ namespace DabHandIn2.Controllers
         }
 
         // GET: Students/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
@@ -52,7 +52,7 @@ namespace DabHandIn2.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AddCourse(string id)
+        public async Task<IActionResult> AddCourse(int id)
         {
             if (id == null)
             {
@@ -65,6 +65,7 @@ namespace DabHandIn2.Controllers
                 return NotFound();
             }
 
+
             ViewData["ID"] = id;
             ViewData["Context"] = _context;
             return View();
@@ -72,7 +73,7 @@ namespace DabHandIn2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("auId,CourseId")] StudentCourse studentCourse)
+        public async Task<IActionResult> AddCourse([Bind("auId,CourseId")] StudentCourse studentCourse)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +89,7 @@ namespace DabHandIn2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("auId,Name,Email")] Student student)
+        public async Task<IActionResult> Create([Bind("Name,Email")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +101,7 @@ namespace DabHandIn2.Controllers
         }
 
         // GET: Students/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
@@ -120,7 +121,7 @@ namespace DabHandIn2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("auId,Name,Email")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("auId,Name,Email")] Student student)
         {
             if (id != student.auId)
             {
@@ -151,7 +152,7 @@ namespace DabHandIn2.Controllers
         }
 
         // GET: Students/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
@@ -171,7 +172,7 @@ namespace DabHandIn2.Controllers
         // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var student = await _context.Students.FindAsync(id);
             _context.Students.Remove(student);
@@ -179,9 +180,27 @@ namespace DabHandIn2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(string id)
+        private bool StudentExists(int id)
         {
             return _context.Students.Any(e => e.auId == id);
+        }
+
+        
+        public async Task<IActionResult> AddHelpReq(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var student = await _context.Students
+                .FirstOrDefaultAsync(m => m.auId == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            return View(student);
         }
     }
 }

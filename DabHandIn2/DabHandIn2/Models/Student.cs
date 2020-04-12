@@ -7,7 +7,7 @@ namespace DabHandIn2.Models
 {
     public class Student
     {
-        public string auId { get; set; }
+        public int auId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public ICollection<StudentAssignment> StudentAssignments { get; set; }

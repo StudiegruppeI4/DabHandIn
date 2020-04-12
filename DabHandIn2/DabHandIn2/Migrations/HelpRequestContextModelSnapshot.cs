@@ -88,8 +88,8 @@ namespace DabHandIn2.Migrations
                     b.Property<string>("Help_Where")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StudentauId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("StudentauId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("TeacherauId")
                         .HasColumnType("int");
@@ -107,8 +107,10 @@ namespace DabHandIn2.Migrations
 
             modelBuilder.Entity("DabHandIn2.Models.Student", b =>
                 {
-                    b.Property<string>("auId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("auId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -126,8 +128,8 @@ namespace DabHandIn2.Migrations
                     b.Property<int>("AssignmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("auId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("auId")
+                        .HasColumnType("int");
 
                     b.HasKey("AssignmentId", "auId");
 
@@ -138,8 +140,8 @@ namespace DabHandIn2.Migrations
 
             modelBuilder.Entity("DabHandIn2.Models.StudentCourse", b =>
                 {
-                    b.Property<string>("auId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("auId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");

@@ -44,6 +44,7 @@
                 @foreach (var course in item.StudentCourses)
                 {
                     @Html.DisplayFor(modelItem => course.CourseId)
+                    <br/>
                 }
             </td>
             <td>
@@ -51,6 +52,7 @@
                 <a asp-action="Details" asp-route-id="@item.auId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.auId">Delete</a> |
                 <a asp-action="AddCourse" asp-route-id="@item.auId">Add course</a>
+                <a asp-action="AddHelpReq" asp-route-id="@item.auId">Add Help Request</a>
             </td>
         </tr>
 }

@@ -2,7 +2,7 @@
 
 namespace DabHandIn2.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,7 +23,8 @@ namespace DabHandIn2.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    auId = table.Column<string>(nullable: false),
+                    auId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true)
                 },
@@ -56,7 +57,7 @@ namespace DabHandIn2.Migrations
                 name: "StudentCourses",
                 columns: table => new
                 {
-                    auId = table.Column<string>(nullable: false),
+                    auId = table.Column<int>(nullable: false),
                     CourseId = table.Column<int>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
                     Semester = table.Column<int>(nullable: false)
@@ -112,7 +113,7 @@ namespace DabHandIn2.Migrations
                     Number = table.Column<int>(nullable: false),
                     Help_Where = table.Column<string>(nullable: true),
                     CourseId = table.Column<int>(nullable: true),
-                    StudentauId = table.Column<string>(nullable: true),
+                    StudentauId = table.Column<int>(nullable: true),
                     TeacherauId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -142,7 +143,7 @@ namespace DabHandIn2.Migrations
                 name: "StudentAssignments",
                 columns: table => new
                 {
-                    auId = table.Column<string>(nullable: false),
+                    auId = table.Column<int>(nullable: false),
                     AssignmentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
