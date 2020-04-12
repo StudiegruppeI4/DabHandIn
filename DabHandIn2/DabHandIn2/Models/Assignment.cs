@@ -4,7 +4,9 @@ namespace DabHandIn2.Models
     public class Assignment
     {
         public int Id { get; set; }
-        public ICollection<AssignmentExercise> AssignmentExercises { get; set; }
-        public ICollection<StudentAssignment> StudentAssignments { get; set; }
+        public string Name { get; set; }
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
+        public int StudentauId { get; set; }
     }
 }

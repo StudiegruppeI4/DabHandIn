@@ -25,13 +25,8 @@ namespace DabHandIn2.Controllers
         }
 
         // GET: HelpRequests/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var student = await _context.Students
                 .FirstOrDefaultAsync(m => m.auId == id);
             if (student == null)
@@ -65,13 +60,8 @@ namespace DabHandIn2.Controllers
         }
 
         // GET: HelpRequests/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var student = await _context.Students.FindAsync(id);
             if (student == null)
             {
@@ -116,13 +106,8 @@ namespace DabHandIn2.Controllers
         }
 
         // GET: HelpRequests/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var student = await _context.Students
                 .FirstOrDefaultAsync(m => m.auId == id);
             if (student == null)

@@ -24,7 +24,12 @@
             <th>
                 Teachers
             </th>
-            <th></th>
+            <th>
+                Exercises
+            </th>
+            <th>
+                Assignments
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -40,7 +45,22 @@
                 @foreach (var teacher in item.Teachers)
                 {
                     @Html.DisplayFor(modelItem => teacher.Name)
-                    <br/>
+                    <br />
+                }
+            </td>
+            <td>
+                @foreach (var exercise in item.Exercises)
+                {
+                    @Html.DisplayFor(modelItem => exercise.Lecture)
+                    @Html.DisplayFor(modelItem => exercise.Number)
+                    <br />
+                }
+            </td>
+            <td>
+                @foreach (var assignment in item.Assignments)
+                {
+                    @Html.DisplayFor(modelItem => assignment.Name)
+                    <br />
                 }
             </td>
             <td>

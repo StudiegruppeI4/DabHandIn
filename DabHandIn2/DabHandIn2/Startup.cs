@@ -25,7 +25,7 @@ namespace DabHandIn2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = "Server=localhost,1433; Database=DabHandIn2; User=sa; Password=Password123!;";
+            string connectionString = "Server=localhost,1433; Database=DabHandin2; User=sa; Password=Password123!;";
             services.AddControllersWithViews();
             services.AddDbContext<HelpRequestContext>(options =>
                 options.UseSqlServer(connectionString));

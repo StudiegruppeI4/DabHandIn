@@ -23,6 +23,8 @@ namespace DabHandIn2.Controllers
         {
             return View(await _context.Courses
                 .Include(c => c.Teachers)
+                .Include(c => c.Exercises)
+                .Include(c => c.Assignments)
                 .ToListAsync());
         }
 
@@ -41,6 +43,8 @@ namespace DabHandIn2.Controllers
         {
             if (ModelState.IsValid)
             {
+                course.Exercises = new List<Exercise>();
+                course.Assignments = new List<Assignment>();
                 _context.Add(course);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

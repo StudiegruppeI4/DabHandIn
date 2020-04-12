@@ -25,25 +25,9 @@ namespace DabHandIn2.Controllers
             return View(await _context.Students
                 .Include(s => s.StudentCourses)
                 .ThenInclude(sc => sc.Course)
+                .Include(s => s.Exercises)
+                .Include(s => s.Assignments)
                 .ToListAsync());
-        }
-
-        // GET: Students/Details/5
-        public async Task<IActionResult> Details(int id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.auId == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return View(student);
         }
 
         // GET: Students/Create
@@ -52,22 +36,28 @@ namespace DabHandIn2.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AddCourse(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Name,Email")] Student student)
         {
-            if (id == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                _context.Add(student);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+            return View(student);
+        }
 
+        public async Task<IActionResult> AddCourse(int? id)
+        {
             var student = await _context.Students.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
             }
 
-
             ViewData["ID"] = id;
-            ViewData["Context"] = _context;
             return View();
         }
 
@@ -84,30 +74,9 @@ namespace DabHandIn2.Controllers
             return View();
         }
 
-        // POST: Students/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Email")] Student student)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(student);
-        }
-
         // GET: Students/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var student = await _context.Students.FindAsync(id);
             if (student == null)
             {
@@ -152,13 +121,8 @@ namespace DabHandIn2.Controllers
         }
 
         // GET: Students/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var student = await _context.Students
                 .FirstOrDefaultAsync(m => m.auId == id);
             if (student == null)
@@ -180,27 +144,55 @@ namespace DabHandIn2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> AddExercise(int id, string lecture, int number, int courseId)
+        {
+            var student = await _context.Students.FindAsync(id);
+            var course = await _context.Courses.FindAsync(courseId);
+            var exercise = await _context.Exercises.FindAsync(lecture, number);
+
+            if (student.Exercises == null)
+            {
+                student.Exercises = new List<Exercise>();
+            }
+
+            if (course.Exercises == null)
+            {
+                course.Exercises = new List<Exercise>();
+            }
+            course.Exercises.Add(exercise);
+
+            student.Exercises.Add(exercise);
+            _context.Students.Update(student);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AddAssignment(int id, int assignmentId, string name, int courseId)
+        {
+            var student = await _context.Students.FindAsync(id);
+            var course = await _context.Courses.FindAsync(courseId);
+            var assignment = await _context.Assignments.FindAsync(assignmentId);
+
+            if (student.Assignments == null)
+            {
+                student.Assignments = new List<Assignment>();
+            }
+            student.Assignments.Add(assignment);
+
+            if (course.Assignments == null)
+            {
+                course.Assignments = new List<Assignment>();
+            }
+            course.Assignments.Add(assignment);
+
+            _context.Students.Update(student);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         private bool StudentExists(int id)
         {
             return _context.Students.Any(e => e.auId == id);
-        }
-
-        
-        public async Task<IActionResult> AddHelpReq(int id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.auId == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return View(student);
         }
     }
 }
