@@ -25,10 +25,10 @@
                 Teachers
             </th>
             <th>
-                Exercises
+                Exercise help requests
             </th>
             <th>
-                Assignments
+                Assignment help requests
             </th>
         </tr>
     </thead>
@@ -65,7 +65,8 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CourseId">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a> |
+                <a asp-action="CourseHelpRequests" asp-controller="HelpRequests" asp-route-CourseId="@item.CourseId">Help requests </a>
             </td>
         </tr>
 }

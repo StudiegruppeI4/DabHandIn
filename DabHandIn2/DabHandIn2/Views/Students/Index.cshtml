@@ -46,6 +46,7 @@
                 @foreach (var exercise in item.Exercises)
                 {
                     @Html.DisplayFor(model => exercise.Lecture)
+                    <p>Lecture #</p>
                     @Html.DisplayFor(model => exercise.Number)
                     <br />
                 }

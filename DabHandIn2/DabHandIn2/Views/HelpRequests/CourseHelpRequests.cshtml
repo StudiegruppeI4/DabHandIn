@@ -1,0 +1,52 @@
+﻿@model IEnumerable< DabHandIn2.Models.Student>
+
+@{
+    ViewData["Title"] = "CourseHelpRequests";
+    Course course = (Course)ViewData["Course"];
+}
+
+
+    <h3>Course ID: @Html.DisplayFor(modelItem => course.CourseId)</h3>
+    <h3>Course Name: @Html.DisplayFor(modelItem => course.Name)</h3>
+    <p>Total number of assignment help requests: @Html.DisplayFor(modelItem => course.Assignments.Count)</p>
+    <p>Total number of exercise help requests: @Html.DisplayFor(modelItem => course.Exercises.Count)</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Exercise help requests
+                </th>
+                <th>
+                    Assignment help requests
+                </th>
+                <th>
+                    Student email
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Student student in Model)
+            {
+                <tr>
+                    <td>
+                        @foreach (var exercise in student.Exercises)
+                        {
+                          @Html.DisplayFor(modelItem => exercise.Lecture)
+                          @Html.DisplayFor(modelItem => exercise.Number)
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        @foreach (var assignment in student.Assignments)
+                        {
+                          @Html.DisplayFor(modelItem => assignment.Name)
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => student.Email)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
