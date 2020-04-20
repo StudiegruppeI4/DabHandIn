@@ -3,14 +3,16 @@ using DabHandIn2.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DabHandIn2.Migrations
 {
     [DbContext(typeof(HelpRequestContext))]
-    partial class HelpRequestContextModelSnapshot : ModelSnapshot
+    [Migration("20200420153655_DummyData")]
+    partial class DummyData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

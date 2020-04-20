@@ -51,6 +51,37 @@ namespace DabHandIn2.Models
                 .HasOne(sc => sc.Course)
                 .WithMany(c => c.StudentCourses)
                 .HasForeignKey(sc => sc.CourseId);
+
+            //Seeding Data
+            mb.Entity<Course>().HasData(
+                new Course { CourseId = 1, Name = "Databaser" },
+                new Course { CourseId = 2, Name = "GUI" }
+                );
+            mb.Entity<Teacher>().HasData(
+                new Teacher{ Name = "Henrik Kirk", auId = 1, CourseId = 1},
+                new Teacher{ Name = "Poul Ejnar",auId = 2, CourseId = 2 }
+                );
+            mb.Entity<Student>().HasData(
+                new Student { Name = "Nikolaj AGRI", auId = 1, Email = "Agri@Agri.com" },
+                new Student { Name = "Fredeirk", auId = 2, Email = "Rosendal@Rosendal.com" }
+                );
+            mb.Entity<Assignment>().HasData(
+                new Assignment { Name = "Dab HandIn #2", Id = 1, CourseId = 1, StudentauId = 1},
+                new Assignment { Name = "GUI for coffee shop", Id = 2, CourseId = 2, StudentauId = 2}
+                );
+            mb.Entity<Exercise>().HasData(
+                new Exercise { Lecture = "Seeding Data in EF Core", CourseId = 1, Number = 56, StudentauId = 1}
+                );
+            mb.Entity<StudentCourse>().HasData(
+                new StudentCourse { CourseId = 1, auId = 1, Active = true, Semester = 4},
+                new StudentCourse { CourseId = 1, auId = 2, Active = true, Semester = 4},
+                new StudentCourse { CourseId = 2, auId = 1, Active = true, Semester = 4},
+                new StudentCourse { CourseId = 2, auId = 2, Active = true, Semester = 4}
+                );
+            
+            
+
+
         }
     }
 }
